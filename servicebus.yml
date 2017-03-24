@@ -1,0 +1,12 @@
+spring:
+ cloud:
+  loadbalancer:
+   retry:
+    enabled: true
+servicebus:
+ ribbon:
+  connect-timeout: 250
+  read-timeout: 1000
+  ok-to-retry-on-all-operations: true
+  max-auto-retries-next-server: 2
+  max-auto-retries: 1
