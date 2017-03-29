@@ -1,0 +1,56 @@
+#hystrix配置
+hystrix:
+ threadpool:
+  default:
+   #修改BlockingQueue的最大队列数，当设为－1，会使用SynchronousQueue，值为正时使用LinkedBlcokingQueue。
+   #该设置只会在初始化时有效，之后不能修改threadpool的queue size，除非reinitialising thread executor。默认－1
+   #应有效降低Queue full的问题
+   maxQueueSize: 100
+   queueSizeRejectionThreshold: 50
+   #基本得原则时保持线程池尽可能小，他主要是为了释放压力，防止资源被阻塞。当一切都是正常的时候，线程池一般仅会有1到2个线程激活来提供服务
+   coreSize: 5
+ command:
+  default:
+   fallback:
+    isolation:
+     semaphore:
+      #如果并发数达到该设置值，请求会被拒绝和抛出异常并且fallback不会被调用。默认10.
+      maxConcurrentRequests: 5
+   execution:
+    isolation:
+     #thread 一般用于网络调用.#semaphore 适用于无网络的高并发请求.选用semaphore时每次执行的单元要比较小且执行速度快（ms级别），否则的话应该用thread。
+     strategy: Semaphore
+     #命令执行超时时间
+     timeoutInMilliseconds: 5000
+     semaphore:
+      #最大并发请求数,semaphore有效,如果达到最大并发请求数，请求会被拒绝。
+      maxConcurrentRequests: 100
+hystrix:
+ stream:
+  queue:
+   #Metrics发送时间间隔，1S
+   sendRate: 1000
+   #Metrics写入时间间隔，10S
+   gatherRate: 10000
+endpoints:
+ restart:
+  enabled: true
+spring:
+ cloud:
+  config:
+   profile: dev
+   discovery:
+    enabled: true
+    serviceId: config-server   
+ jmx:
+  enabled: false
+#配置服务注册中心 
+eureka:     
+  instance:
+   metadata-map:
+    cluster: MAIN
+  client:
+    registerWithEureka: true
+    fetchRegistry: true        
+    serviceUrl:
+      defaultZone: "http://discovery-secondary:8012/eureka/,http://discovery-primary:8011/eureka/" 
