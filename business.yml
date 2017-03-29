@@ -25,7 +25,6 @@ hystrix:
      semaphore:
       #最大并发请求数,semaphore有效,如果达到最大并发请求数，请求会被拒绝。
       maxConcurrentRequests: 100
-hystrix:
  stream:
   queue:
    #Metrics发送时间间隔，1S
@@ -35,22 +34,6 @@ hystrix:
 endpoints:
  restart:
   enabled: true
-spring:
- cloud:
-  config:
-   profile: dev
-   discovery:
-    enabled: true
-    serviceId: config-server   
+spring:  
  jmx:
   enabled: false
-#配置服务注册中心 
-eureka:     
-  instance:
-   metadata-map:
-    cluster: MAIN
-  client:
-    registerWithEureka: true
-    fetchRegistry: true        
-    serviceUrl:
-      defaultZone: "http://discovery-secondary:8012/eureka/,http://discovery-primary:8011/eureka/" 
