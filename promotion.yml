@@ -21,7 +21,7 @@ hystrix:
      #thread 一般用于网络调用.#semaphore 适用于无网络的高并发请求.选用semaphore时每次执行的单元要比较小且执行速度快（ms级别），否则的话应该用thread。
      strategy: SEMAPHORE
      #命令执行超时时间
-     timeoutInMilliseconds: 5000
+     timeoutInMilliseconds: 20000
      semaphore:
       #最大并发请求数,semaphore有效,如果达到最大并发请求数，请求会被拒绝。
       maxConcurrentRequests: 100
