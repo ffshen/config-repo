@@ -16,15 +16,15 @@ hystrix:
      semaphore:
       #如果并发数达到该设置值，请求会被拒绝和抛出异常并且fallback不会被调用。默认10.
       maxConcurrentRequests: 5
-   execution:
-    isolation:
+   #execution:
+    #isolation:
      #thread 一般用于网络调用.#semaphore 适用于无网络的高并发请求.选用semaphore时每次执行的单元要比较小且执行速度快（ms级别），否则的话应该用thread。
-     strategy: SEMAPHORE
+     #strategy: SEMAPHORE
      #命令执行超时时间
      #timeoutInMilliseconds: 20000
-     semaphore:
+     #semaphore:
       #最大并发请求数,semaphore有效,如果达到最大并发请求数，请求会被拒绝。
-      maxConcurrentRequests: 100
+      #maxConcurrentRequests: 100
  stream:
   queue:
    #Metrics发送时间间隔，1S
